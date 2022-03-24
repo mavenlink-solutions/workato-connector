@@ -1,1146 +1,135 @@
+
+
+
 {
-    title: "Mavenlink",
-  
-    # API key authentication example.See more examples at https: //docs.workato.com/developing-connectors/sdk/guides/authentication.html
-      connection: {
-        fields: [{
-          name: "api_key",
-          hint: "You can find your API key "\
-          "<a href='https://app.mavenlink.com/oauth/applications' "\
+  title: "Mavenlink",
+
+  # API key authentication example. See more examples at https://docs.workato.com/developing-connectors/sdk/guides/authentication.html
+  connection: {
+    fields: [
+      {
+        name: "api_key",
+        hint: "You can find your API key " \
+          "<a href='https://app.mavenlink.com/oauth/applications' " \
           "target='_blank'>here</a>"
-        }],
-  
-        authorization: {
-          type: "custom_auth",
-  
-          # Calendly uses header auth(X - Token: < api key > )
-          apply: lambda do |connection |
-              headers("Authorization": "Bearer #{connection["
-                api_key "]}")
-            end
-        },
-  
-        base_uri: lambda do
-            "https://api.mavenlink.com/api/v1/"
-          end
-      },
-  
-    test: lambda do |_connection |
-        get("users/me")
-      end,
-  
-    object_definitions: {
-      # Object definitions can be referenced by any input or output fields in actions / triggers.
-      # Use it to keep your code DRY.Possible arguments - connection,
-      config_fields
-      # See more at https: //docs.workato.com/developing-connectors/sdk/sdk-reference/object_definitions.html
-        workspaces: {
-          fields: lambda do |_connection, _config_fields | [{
-                name: "workspaces",
-                type: "array",
-                properties: [{
-                    "control_type": "text",
-                    "label": "Title",
-                    "type": "string",
-                    "name": "title"
-                  },
-                  {
-                    "control_type": "number",
-                    "label": "Account ID",
-                    "parse_output": "float_conversion",
-                    "type": "number",
-                    "name": "account_id"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Archived",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Archived",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "archived"
-                    },
-                    "type": "boolean",
-                    "name": "archived"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Description",
-                    "type": "string",
-                    "name": "description"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Due date",
-                    "type": "string",
-                    "name": "due_date"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Effective due date",
-                    "type": "string",
-                    "name": "effective_due_date"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Start date",
-                    "type": "string",
-                    "name": "start_date"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Budgeted",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Budgeted",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "budgeted"
-                    },
-                    "type": "boolean",
-                    "name": "budgeted"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Change orders enabled",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Change orders enabled",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "change_orders_enabled"
-                    },
-                    "type": "boolean",
-                    "name": "change_orders_enabled"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Updated at",
-                    "render_input": "date_time_conversion",
-                    "parse_output": "date_time_conversion",
-                    "type": "date_time",
-                    "name": "updated_at"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Created at",
-                    "render_input": "date_time_conversion",
-                    "parse_output": "date_time_conversion",
-                    "type": "date_time",
-                    "name": "created_at"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Consultant role name",
-                    "type": "string",
-                    "name": "consultant_role_name"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Client role name",
-                    "type": "string",
-                    "name": "client_role_name"
-                  },
-                  {
-                    "control_type": "number",
-                    "label": "Percentage complete",
-                    "parse_output": "float_conversion",
-                    "type": "number",
-                    "name": "percentage_complete"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Access level",
-                    "type": "string",
-                    "name": "access_level"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Exclude archived stories percent complete",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Exclude archived stories percent complete",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "exclude_archived_stories_percent_complete"
-                    },
-                    "type": "boolean",
-                    "name": "exclude_archived_stories_percent_complete"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Show nonbillable time on invoices",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Show nonbillable time on invoices",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "show_nonbillable_time_on_invoices"
-                    },
-                    "type": "boolean",
-                    "name": "show_nonbillable_time_on_invoices"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Can create line items",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Can create line items",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "can_create_line_items"
-                    },
-                    "type": "boolean",
-                    "name": "can_create_line_items"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Default rate",
-                    "type": "string",
-                    "name": "default_rate"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Currency",
-                    "type": "string",
-                    "name": "currency"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Currency symbol",
-                    "type": "string",
-                    "name": "currency_symbol"
-                  },
-                  {
-                    "control_type": "number",
-                    "label": "Currency base unit",
-                    "parse_output": "float_conversion",
-                    "type": "number",
-                    "name": "currency_base_unit"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Can invite",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Can invite",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "can_invite"
-                    },
-                    "type": "boolean",
-                    "name": "can_invite"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Has budget access",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Has budget access",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "has_budget_access"
-                    },
-                    "type": "boolean",
-                    "name": "has_budget_access"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Revenue recognition method",
-                    "type": "string",
-                    "name": "revenue_recognition_method"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Tasks default non billable",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Tasks default non billable",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "tasks_default_non_billable"
-                    },
-                    "type": "boolean",
-                    "name": "tasks_default_non_billable"
-                  },
-                  {
-                    "control_type": "number",
-                    "label": "Rate card ID",
-                    "parse_output": "float_conversion",
-                    "type": "number",
-                    "name": "rate_card_id"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Workspace invoice preference ID",
-                    "type": "string",
-                    "name": "workspace_invoice_preference_id"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Posts require privacy decision",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Posts require privacy decision",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "posts_require_privacy_decision"
-                    },
-                    "type": "boolean",
-                    "name": "posts_require_privacy_decision"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Require time approvals",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Require time approvals",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "require_time_approvals"
-                    },
-                    "type": "boolean",
-                    "name": "require_time_approvals"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Require expense approvals",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Require expense approvals",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "require_expense_approvals"
-                    },
-                    "type": "boolean",
-                    "name": "require_expense_approvals"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Has active timesheet submissions",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Has active timesheet submissions",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "has_active_timesheet_submissions"
-                    },
-                    "type": "boolean",
-                    "name": "has_active_timesheet_submissions"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Has active expense report submissions",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Has active expense report submissions",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "has_active_expense_report_submissions"
-                    },
-                    "type": "boolean",
-                    "name": "has_active_expense_report_submissions"
-                  },
-                  {
-                    "properties": [{
-                        "control_type": "text",
-                        "label": "Color",
-                        "type": "string",
-                        "name": "color"
-                      },
-                      {
-                        "control_type": "number",
-                        "label": "Key",
-                        "parse_output": "float_conversion",
-                        "type": "number",
-                        "name": "key"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Message",
-                        "type": "string",
-                        "name": "message"
-                      }
-                    ],
-                    "label": "Status",
-                    "type": "object",
-                    "name": "status"
-                  },
-                  {
-                    "name": "update_whitelist",
-                    "type": "array",
-                    "of": "string",
-                    "control_type": "text",
-                    "label": "Update whitelist"
-                  },
-                  {
-                    "properties": [{
-                        "control_type": "text",
-                        "label": "Time trackable",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Time trackable",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "time_trackable"
-                        },
-                        "type": "boolean",
-                        "name": "time_trackable"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Has time entry role picker",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Has time entry role picker",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "has_time_entry_role_picker"
-                        },
-                        "type": "boolean",
-                        "name": "has_time_entry_role_picker"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Project side panel",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Project side panel",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "project_side_panel"
-                        },
-                        "type": "boolean",
-                        "name": "project_side_panel"
-                      }
-                    ],
-                    "label": "Account features",
-                    "type": "object",
-                    "name": "account_features"
-                  },
-                  {
-                    "properties": [{
-                        "control_type": "text",
-                        "label": "Can upload files",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can upload files",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_upload_files"
-                        },
-                        "type": "boolean",
-                        "name": "can_upload_files"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Can private message",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can private message",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_private_message"
-                        },
-                        "type": "boolean",
-                        "name": "can_private_message"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Can join",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can join",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_join"
-                        },
-                        "type": "boolean",
-                        "name": "can_join"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Is participant",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Is participant",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "is_participant"
-                        },
-                        "type": "boolean",
-                        "name": "is_participant"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Access level",
-                        "type": "string",
-                        "name": "access_level"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Team lead",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Team lead",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "team_lead"
-                        },
-                        "type": "boolean",
-                        "name": "team_lead"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "User is client",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "User is client",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "user_is_client"
-                        },
-                        "type": "boolean",
-                        "name": "user_is_client"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Can change price",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can change price",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_change_price"
-                        },
-                        "type": "boolean",
-                        "name": "can_change_price"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Can change story billable",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can change story billable",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_change_story_billable"
-                        },
-                        "type": "boolean",
-                        "name": "can_change_story_billable"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Can post",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can post",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_post"
-                        },
-                        "type": "boolean",
-                        "name": "can_post"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Can edit",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can edit",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_edit"
-                        },
-                        "type": "boolean",
-                        "name": "can_edit"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Restricted",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Restricted",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "restricted"
-                        },
-                        "type": "boolean",
-                        "name": "restricted"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Can see financials",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Can see financials",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "can_see_financials"
-                        },
-                        "type": "boolean",
-                        "name": "can_see_financials"
-                      },
-                      {
-                        "control_type": "text",
-                        "label": "Is guest on project",
-                        "render_input": {},
-                        "parse_output": {},
-                        "toggle_hint": "Select from option list",
-                        "toggle_field": {
-                          "label": "Is guest on project",
-                          "control_type": "text",
-                          "toggle_hint": "Use custom value",
-                          "type": "boolean",
-                          "name": "is_guest_on_project"
-                        },
-                        "type": "boolean",
-                        "name": "is_guest_on_project"
-                      }
-                    ],
-                    "label": "Permissions",
-                    "type": "object",
-                    "name": "permissions"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Over budget",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Over budget",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "over_budget"
-                    },
-                    "type": "boolean",
-                    "name": "over_budget"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Expenses in burn rate",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Expenses in burn rate",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "expenses_in_burn_rate"
-                    },
-                    "type": "boolean",
-                    "name": "expenses_in_burn_rate"
-                  },
-                  {
-                    "control_type": "number",
-                    "label": "Total expenses in cents",
-                    "parse_output": "float_conversion",
-                    "type": "number",
-                    "name": "total_expenses_in_cents"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Price in cents",
-                    "type": "string",
-                    "name": "price_in_cents"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Price",
-                    "type": "string",
-                    "name": "price"
-                  },
-                  {
-                    "control_type": "number",
-                    "label": "Percent of budget used",
-                    "parse_output": "float_conversion",
-                    "type": "number",
-                    "name": "percent_of_budget_used"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Budget used",
-                    "type": "string",
-                    "name": "budget_used"
-                  },
-                  {
-                    "control_type": "number",
-                    "label": "Budget used in cents",
-                    "parse_output": "float_conversion",
-                    "type": "number",
-                    "name": "budget_used_in_cents"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Budget remaining",
-                    "type": "string",
-                    "name": "budget_remaining"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Target margin",
-                    "type": "string",
-                    "name": "target_margin"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Stories are fixed fee by default",
-                    "render_input": {},
-                    "parse_output": {},
-                    "toggle_hint": "Select from option list",
-                    "toggle_field": {
-                      "label": "Stories are fixed fee by default",
-                      "control_type": "text",
-                      "toggle_hint": "Use custom value",
-                      "type": "boolean",
-                      "name": "stories_are_fixed_fee_by_default"
-                    },
-                    "type": "boolean",
-                    "name": "stories_are_fixed_fee_by_default"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Creator ID",
-                    "type": "string",
-                    "name": "creator_id"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "Primary maven ID",
-                    "type": "string",
-                    "name": "primary_maven_id"
-                  },
-                  {
-                    "control_type": "text",
-                    "label": "ID",
-                    "type": "string",
-                    "name": "id"
-                  }
-                ]
-              }
-  
-            ]
-            end
-        },
-      stories: {
-        fields: lambda do |_connection, _config_fields |
-  
-            [{
-  
-              type: "array",
-              name: "stories",
-  
-              "properties": [{
-                  "control_type": "text",
-                  "label": "Title",
-                  "type": "string",
-                  "name": "title"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Description",
-                  "type": "string",
-                  "name": "description"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Updated at",
-                  "render_input": "date_time_conversion",
-                  "parse_output": "date_time_conversion",
-                  "type": "date_time",
-                  "name": "updated_at"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Assignment timestamped at",
-                  "render_input": "date_time_conversion",
-                  "parse_output": "date_time_conversion",
-                  "type": "date_time",
-                  "name": "assignment_timestamped_at"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Created at",
-                  "render_input": "date_time_conversion",
-                  "parse_output": "date_time_conversion",
-                  "type": "date_time",
-                  "name": "created_at"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Due date",
-                  "type": "string",
-                  "name": "due_date"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Start date",
-                  "type": "string",
-                  "name": "start_date"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Story type",
-                  "type": "string",
-                  "name": "story_type"
-                },
-                {
-                  "control_type": "text",
-                  "label": "State",
-                  "type": "string",
-                  "name": "state"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Position",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "position"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Archived",
-                  "render_input": {},
-                  "parse_output": {},
-                  "toggle_hint": "Select from option list",
-                  "toggle_field": {
-                    "label": "Archived",
-                    "control_type": "text",
-                    "toggle_hint": "Use custom value",
-                    "type": "boolean",
-                    "name": "archived"
-                  },
-                  "type": "boolean",
-                  "name": "archived"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Deleted at",
-                  "type": "string",
-                  "name": "deleted_at"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Sub story count",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "sub_story_count"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Percentage complete",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "percentage_complete"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Priority",
-                  "type": "string",
-                  "name": "priority"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Has proofing access",
-                  "render_input": {},
-                  "parse_output": {},
-                  "toggle_hint": "Select from option list",
-                  "toggle_field": {
-                    "label": "Has proofing access",
-                    "control_type": "text",
-                    "toggle_hint": "Use custom value",
-                    "type": "boolean",
-                    "name": "has_proofing_access"
-                  },
-                  "type": "boolean",
-                  "name": "has_proofing_access"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Subtree depth",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "subtree_depth"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Ancestry depth",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "ancestry_depth"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Time trackable",
-                  "render_input": {},
-                  "parse_output": {},
-                  "toggle_hint": "Select from option list",
-                  "toggle_field": {
-                    "label": "Time trackable",
-                    "control_type": "text",
-                    "toggle_hint": "Use custom value",
-                    "type": "boolean",
-                    "name": "time_trackable"
-                  },
-                  "type": "boolean",
-                  "name": "time_trackable"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Time estimate in minutes",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "time_estimate_in_minutes"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Logged billable time in minutes",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "logged_billable_time_in_minutes"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Logged nonbillable time in minutes",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "logged_nonbillable_time_in_minutes"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Sub stories time estimate in minutes",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "sub_stories_time_estimate_in_minutes"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Sub stories billable time in minutes",
-                  "type": "string",
-                  "name": "sub_stories_billable_time_in_minutes"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Weight",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "weight"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Budget estimate in cents",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "budget_estimate_in_cents"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Budget used in cents",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "budget_used_in_cents"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Uninvoiced balance in cents",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "uninvoiced_balance_in_cents"
-                },
-                {
-                  "control_type": "number",
-                  "label": "Invoiced balance in cents",
-                  "parse_output": "float_conversion",
-                  "type": "number",
-                  "name": "invoiced_balance_in_cents"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Sub stories budget estimate in cents",
-                  "type": "string",
-                  "name": "sub_stories_budget_estimate_in_cents"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Sub stories budget used in cents",
-                  "type": "string",
-                  "name": "sub_stories_budget_used_in_cents"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Fixed fee",
-                  "render_input": {},
-                  "parse_output": {},
-                  "toggle_hint": "Select from option list",
-                  "toggle_field": {
-                    "label": "Fixed fee",
-                    "control_type": "text",
-                    "toggle_hint": "Use custom value",
-                    "type": "boolean",
-                    "name": "fixed_fee"
-                  },
-                  "type": "boolean",
-                  "name": "fixed_fee"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Billable",
-                  "render_input": {},
-                  "parse_output": {},
-                  "toggle_hint": "Select from option list",
-                  "toggle_field": {
-                    "label": "Billable",
-                    "control_type": "text",
-                    "toggle_hint": "Use custom value",
-                    "type": "boolean",
-                    "name": "billable"
-                  },
-                  "type": "boolean",
-                  "name": "billable"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Workspace ID",
-                  "type": "string",
-                  "name": "workspace_id"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Creator ID",
-                  "type": "string",
-                  "name": "creator_id"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Parent ID",
-                  "type": "string",
-                  "name": "parent_id"
-                },
-                {
-                  "control_type": "text",
-                  "label": "Root ID",
-                  "type": "string",
-                  "name": "root_id"
-                },
-                {
-                  "control_type": "text",
-                  "label": "ID",
-                  "type": "string",
-                  "name": "id"
-                }
-              ]
-            }]
-  
-          end
-      },
-      time_entries: {
-        fields: lambda do |_connection, _config_fields | [{
-            name: "time_entries",
+      }
+    ],
+
+    authorization: {
+      type: "custom_auth", 
+
+      # Calendly uses header auth (X-Token: <api key>)
+      apply: lambda do |connection|
+        headers("Authorization": "Bearer #{connection["api_key"]}")
+      end
+    },
+
+    base_uri: lambda do
+      "https://api.mavenlink.com/api/v1/"
+    end
+  },
+
+
+
+  test: lambda do |_connection|
+    get("workspaces?per_page=1")
+  end,
+
+  object_definitions: {
+    #  Object definitions can be referenced by any input or output fields in actions/triggers.
+    #  Use it to keep your code DRY. Possible arguments - connection, config_fields
+    #  See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/object_definitions.html
+    workspaces: {
+      fields: lambda do |_connection, _config_fields|
+     [
+          { 
+            name: "workspaces",
             type: "array",
-            "properties": [{
+            properties: [
+              {
                 "control_type": "text",
-                "label": "Location",
+                "label": "Title",
                 "type": "string",
-                "name": "location"
+                "name": "title"
+              },
+              {
+                "control_type": "number",
+                "label": "Account ID",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "account_id"
               },
               {
                 "control_type": "text",
-                "label": "Created at",
-                "render_input": "date_time_conversion",
-                "parse_output": "date_time_conversion",
-                "type": "date_time",
-                "name": "created_at"
+                "label": "Archived",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Archived",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "archived"
+                },
+                "type": "boolean",
+                "name": "archived"
+              },
+              {
+                "control_type": "text",
+                "label": "Description",
+                "type": "string",
+                "name": "description"
+              },
+              {
+                "control_type": "text",
+                "label": "Due date",
+                "type": "string",
+                "name": "due_date"
+              },
+              {
+                "control_type": "text",
+                "label": "Effective due date",
+                "type": "string",
+                "name": "effective_due_date"
+              },
+              {
+                "control_type": "text",
+                "label": "Start date",
+                "type": "string",
+                "name": "start_date"
+              },
+              {
+                "control_type": "text",
+                "label": "Budgeted",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Budgeted",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "budgeted"
+                },
+                "type": "boolean",
+                "name": "budgeted"
+              },
+              {
+                "control_type": "text",
+                "label": "Change orders enabled",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Change orders enabled",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "change_orders_enabled"
+                },
+                "type": "boolean",
+                "name": "change_orders_enabled"
               },
               {
                 "control_type": "text",
@@ -1152,52 +141,90 @@
               },
               {
                 "control_type": "text",
-                "label": "Date performed",
-                "type": "string",
-                "name": "date_performed"
-              },
-              {
-                "control_type": "number",
-                "label": "Time in minutes",
-                "parse_output": "float_conversion",
-                "type": "number",
-                "name": "time_in_minutes"
+                "label": "Created at",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "type": "date_time",
+                "name": "created_at"
               },
               {
                 "control_type": "text",
-                "label": "Billable",
+                "label": "Consultant role name",
+                "type": "string",
+                "name": "consultant_role_name"
+              },
+              {
+                "control_type": "text",
+                "label": "Client role name",
+                "type": "string",
+                "name": "client_role_name"
+              },
+              {
+                "control_type": "number",
+                "label": "Percentage complete",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "percentage_complete"
+              },
+              {
+                "control_type": "text",
+                "label": "Access level",
+                "type": "string",
+                "name": "access_level"
+              },
+              {
+                "control_type": "text",
+                "label": "Exclude archived stories percent complete",
                 "render_input": {},
                 "parse_output": {},
                 "toggle_hint": "Select from option list",
                 "toggle_field": {
-                  "label": "Billable",
+                  "label": "Exclude archived stories percent complete",
                   "control_type": "text",
                   "toggle_hint": "Use custom value",
                   "type": "boolean",
-                  "name": "billable"
+                  "name": "exclude_archived_stories_percent_complete"
                 },
                 "type": "boolean",
-                "name": "billable"
+                "name": "exclude_archived_stories_percent_complete"
               },
               {
                 "control_type": "text",
-                "label": "Notes",
+                "label": "Show nonbillable time on invoices",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Show nonbillable time on invoices",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "show_nonbillable_time_on_invoices"
+                },
+                "type": "boolean",
+                "name": "show_nonbillable_time_on_invoices"
+              },
+              {
+                "control_type": "text",
+                "label": "Can create line items",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Can create line items",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "can_create_line_items"
+                },
+                "type": "boolean",
+                "name": "can_create_line_items"
+              },
+              {
+                "control_type": "text",
+                "label": "Default rate",
                 "type": "string",
-                "name": "notes"
-              },
-              {
-                "control_type": "number",
-                "label": "Rate in cents",
-                "parse_output": "float_conversion",
-                "type": "number",
-                "name": "rate_in_cents"
-              },
-              {
-                "control_type": "number",
-                "label": "Cost rate in cents",
-                "parse_output": "float_conversion",
-                "type": "number",
-                "name": "cost_rate_in_cents"
+                "name": "default_rate"
               },
               {
                 "control_type": "text",
@@ -1220,81 +247,570 @@
               },
               {
                 "control_type": "text",
-                "label": "Approved",
+                "label": "Can invite",
                 "render_input": {},
                 "parse_output": {},
                 "toggle_hint": "Select from option list",
                 "toggle_field": {
-                  "label": "Approved",
+                  "label": "Can invite",
                   "control_type": "text",
                   "toggle_hint": "Use custom value",
                   "type": "boolean",
-                  "name": "approved"
+                  "name": "can_invite"
                 },
                 "type": "boolean",
-                "name": "approved"
+                "name": "can_invite"
               },
               {
                 "control_type": "text",
-                "label": "Taxable",
+                "label": "Has budget access",
                 "render_input": {},
                 "parse_output": {},
                 "toggle_hint": "Select from option list",
                 "toggle_field": {
-                  "label": "Taxable",
+                  "label": "Has budget access",
                   "control_type": "text",
                   "toggle_hint": "Use custom value",
                   "type": "boolean",
-                  "name": "taxable"
+                  "name": "has_budget_access"
                 },
                 "type": "boolean",
-                "name": "taxable"
+                "name": "has_budget_access"
               },
               {
                 "control_type": "text",
-                "label": "Is invoiced",
+                "label": "Revenue recognition method",
+                "type": "string",
+                "name": "revenue_recognition_method"
+              },
+              {
+                "control_type": "text",
+                "label": "Tasks default non billable",
                 "render_input": {},
                 "parse_output": {},
                 "toggle_hint": "Select from option list",
                 "toggle_field": {
-                  "label": "Is invoiced",
+                  "label": "Tasks default non billable",
                   "control_type": "text",
                   "toggle_hint": "Use custom value",
                   "type": "boolean",
-                  "name": "is_invoiced"
+                  "name": "tasks_default_non_billable"
                 },
                 "type": "boolean",
-                "name": "is_invoiced"
+                "name": "tasks_default_non_billable"
+              },
+              {
+                "control_type": "number",
+                "label": "Rate card ID",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "rate_card_id"
               },
               {
                 "control_type": "text",
-                "label": "Story ID",
+                "label": "Workspace invoice preference ID",
                 "type": "string",
-                "name": "story_id"
+                "name": "workspace_invoice_preference_id"
               },
               {
                 "control_type": "text",
-                "label": "Workspace ID",
-                "type": "string",
-                "name": "workspace_id"
+                "label": "Posts require privacy decision",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Posts require privacy decision",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "posts_require_privacy_decision"
+                },
+                "type": "boolean",
+                "name": "posts_require_privacy_decision"
               },
               {
                 "control_type": "text",
-                "label": "User ID",
-                "type": "string",
-                "name": "user_id"
+                "label": "Require time approvals",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Require time approvals",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "require_time_approvals"
+                },
+                "type": "boolean",
+                "name": "require_time_approvals"
               },
               {
                 "control_type": "text",
-                "label": "Active submission ID",
-                "type": "string",
-                "name": "active_submission_id"
+                "label": "Require expense approvals",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Require expense approvals",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "require_expense_approvals"
+                },
+                "type": "boolean",
+                "name": "require_expense_approvals"
               },
               {
                 "control_type": "text",
-                "label": "Recent submission ID",
+                "label": "Has active timesheet submissions",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Has active timesheet submissions",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "has_active_timesheet_submissions"
+                },
+                "type": "boolean",
+                "name": "has_active_timesheet_submissions"
+              },
+              {
+                "control_type": "text",
+                "label": "Has active expense report submissions",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Has active expense report submissions",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "has_active_expense_report_submissions"
+                },
+                "type": "boolean",
+                "name": "has_active_expense_report_submissions"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Color",
+                    "type": "string",
+                    "name": "color"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Key",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "key"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Message",
+                    "type": "string",
+                    "name": "message"
+                  }
+                ],
+                "label": "Status",
+                "type": "object",
+                "name": "status"
+              },
+              {
+                "name": "update_whitelist",
+                "type": "array",
+                "of": "string",
+                "control_type": "text",
+                "label": "Update whitelist"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Time trackable",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Time trackable",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "time_trackable"
+                    },
+                    "type": "boolean",
+                    "name": "time_trackable"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Has time entry role picker",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Has time entry role picker",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "has_time_entry_role_picker"
+                    },
+                    "type": "boolean",
+                    "name": "has_time_entry_role_picker"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Project side panel",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Project side panel",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "project_side_panel"
+                    },
+                    "type": "boolean",
+                    "name": "project_side_panel"
+                  }
+                ],
+                "label": "Account features",
+                "type": "object",
+                "name": "account_features"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Can upload files",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can upload files",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_upload_files"
+                    },
+                    "type": "boolean",
+                    "name": "can_upload_files"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Can private message",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can private message",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_private_message"
+                    },
+                    "type": "boolean",
+                    "name": "can_private_message"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Can join",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can join",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_join"
+                    },
+                    "type": "boolean",
+                    "name": "can_join"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is participant",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is participant",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_participant"
+                    },
+                    "type": "boolean",
+                    "name": "is_participant"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Access level",
+                    "type": "string",
+                    "name": "access_level"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Team lead",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Team lead",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "team_lead"
+                    },
+                    "type": "boolean",
+                    "name": "team_lead"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "User is client",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "User is client",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "user_is_client"
+                    },
+                    "type": "boolean",
+                    "name": "user_is_client"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Can change price",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can change price",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_change_price"
+                    },
+                    "type": "boolean",
+                    "name": "can_change_price"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Can change story billable",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can change story billable",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_change_story_billable"
+                    },
+                    "type": "boolean",
+                    "name": "can_change_story_billable"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Can post",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can post",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_post"
+                    },
+                    "type": "boolean",
+                    "name": "can_post"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Can edit",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can edit",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_edit"
+                    },
+                    "type": "boolean",
+                    "name": "can_edit"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Restricted",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Restricted",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "restricted"
+                    },
+                    "type": "boolean",
+                    "name": "restricted"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Can see financials",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Can see financials",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "can_see_financials"
+                    },
+                    "type": "boolean",
+                    "name": "can_see_financials"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is guest on project",
+                    "render_input": {},
+                    "parse_output": {},
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is guest on project",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_guest_on_project"
+                    },
+                    "type": "boolean",
+                    "name": "is_guest_on_project"
+                  }
+                ],
+                "label": "Permissions",
+                "type": "object",
+                "name": "permissions"
+              },
+              {
+                "control_type": "text",
+                "label": "Over budget",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Over budget",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "over_budget"
+                },
+                "type": "boolean",
+                "name": "over_budget"
+              },
+              {
+                "control_type": "text",
+                "label": "Expenses in burn rate",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Expenses in burn rate",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "expenses_in_burn_rate"
+                },
+                "type": "boolean",
+                "name": "expenses_in_burn_rate"
+              },
+              {
+                "control_type": "number",
+                "label": "Total expenses in cents",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "total_expenses_in_cents"
+              },
+              {
+                "control_type": "text",
+                "label": "Price in cents",
                 "type": "string",
-                "name": "recent_submission_id"
+                "name": "price_in_cents"
+              },
+              {
+                "control_type": "text",
+                "label": "Price",
+                "type": "string",
+                "name": "price"
+              },
+              {
+                "control_type": "number",
+                "label": "Percent of budget used",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "percent_of_budget_used"
+              },
+              {
+                "control_type": "text",
+                "label": "Budget used",
+                "type": "string",
+                "name": "budget_used"
+              },
+              {
+                "control_type": "number",
+                "label": "Budget used in cents",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "budget_used_in_cents"
+              },
+              {
+                "control_type": "text",
+                "label": "Budget remaining",
+                "type": "string",
+                "name": "budget_remaining"
+              },
+              {
+                "control_type": "text",
+                "label": "Target margin",
+                "type": "string",
+                "name": "target_margin"
+              },
+              {
+                "control_type": "text",
+                "label": "Stories are fixed fee by default",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Stories are fixed fee by default",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "stories_are_fixed_fee_by_default"
+                },
+                "type": "boolean",
+                "name": "stories_are_fixed_fee_by_default"
+              },
+              {
+                "control_type": "text",
+                "label": "Creator ID",
+                "type": "string",
+                "name": "creator_id"
+              },
+              {
+                "control_type": "text",
+                "label": "Primary maven ID",
+                "type": "string",
+                "name": "primary_maven_id"
               },
               {
                 "control_type": "text",
@@ -1303,177 +819,782 @@
                 "name": "id"
               }
             ]
-          }]
-          end
-      }
-  
+          }
+       
+        ]
+      end
     },
-    actions: {
-      get_workspaces: {
-        # Define the way people search
-        for your actions and how it looks like on the recipe level
-        # See more at https: //docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html
-          title: "Get first page of workspaces",
-        subtitle: "Get workspaces in Mavenlink",
-        description: "Get <span class='provider'>workspaces</span> "\
-        "in <span class='provider'>Mavenlink</span>",
-        help: "This action will retrieve all workspaces from Mavenlink. Use this action"\
-        " to get all your projects",
-  
-        # The input fields shown
-        for this action.Shows when a user is defining the action.
-        # Possible arguements in this specific order - object_definitions
-        # See more at https: //docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#input-fields
-          input_fields: lambda do |object_definitions | [{
-            name: 'params',
-            label: 'Filter Parameters',
-            type: 'string',
-            optional: true
-          }]
-          end,
-  
-        # This code is run when a recipe uses this action.
-        # Possible arguements in this specific order - connection,
-        input,
-        input_schema,
-        output_schema
-        # See more at https: //docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#execute
-          execute: lambda do |_connection, _input, _input_schema, _output_schema | {
-            workspaces: get("workspaces?#{_input["
-              params "]}")["workspaces"].values
-          }
-          end,
-  
-        # The output values of the action.Shows in the output datatree of a recipe.
-        # Possible arguements in this specific order - object_definitions
-        # See more at https: //docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#output-fields
-          output_fields: lambda do |object_definitions |
-            object_definitions["workspaces"]
-          end,
-  
-        # Provides you with a preview of possible output values in your datatree.
-        # Possible arguements in this specific order - connection,
-        input
-        # See more at https: //docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#sample-output
-          sample_output: lambda do |_connection, _input |
-            get("workspaces")["workspaces"].values
-          end
-      },
-  
-      get_stories: {
-  
-        title: "Get first page of stories",
-        subtitle: "Get stories in Mavenlink",
-        description: "Get <span class='provider'>stories</span> "\
-        "in <span class='provider'>Mavenlink</span>",
-        help: "This action will retrieve all stories from Mavenlink. Use this action"\
-        " to get all your stories",
-  
-        input_fields: lambda do |object_definitions |
-          end,
-  
-          execute: lambda do |_connection, _input, _input_schema, _output_schema | {
-            stories: get("stories")["stories"].values
-          }
-          end,
-  
-          output_fields: lambda do |object_definitions |
-            object_definitions["stories"]
-          end,
-  
-          sample_output: lambda do |_connection, _input |
-            get("stories")["stories"].values
-          end
-      },
-  
-      get_time_entries: {
-        title: "Get first page of time entries",
-        subtitle: "Get time entries in Mavenlink",
-        description: "Get <span class='provider'>time entries</span> "\
-        "in <span class='provider'>Mavenlink</span>",
-        help: "This action will retrieve all time entries from Mavenlink. Use this action"\
-        " to get all your time entries",
-  
-        input_fields: lambda do |object_definitions |
-          end,
-  
-          execute: lambda do |_connection, _input, _input_schema, _output_schema | {
-            time_entries: get("time_entries")["time_entries"].values
-          }
-          end,
-  
-          output_fields: lambda do |object_definitions |
-            object_definitions["time_entries"]
-          end,
-  
-          sample_output: lambda do |_connection, _input |
-            get("time_entries")["time_entries"].values
-          end
-      },
-  
-      get_ml_object_by_id: {
-  
-        title: "Get ML Object by Id",
-        subtitle: "Get object by Id in Mavenlink",
-        description: "Get object in Mavenlink by Id</span>",
-        help: "This will retrieve one object from Mavenlink. Use this action"\
-        " to get one project",
-  
-        config_fields: [{
-          name: 'object_type_selected',
-          optional: false,
-          label: 'Object Type',
-          control_type: 'select',
-          pick_list: 'ml_object_types',
-          hint: 'Select the ML object type from picklist.'
-        }],
-        input_fields: lambda do
-            [{
-              name: 'id',
-              label: 'ID',
-              type: 'integer',
-              optional: false
-            }]
-          end,
-  
-        execute: lambda do |_connection, _input, _input_schema, _output_schema | {
-            "{_input['object_type_selected']}": get("#{_input["
-              object_type_selected "]}/#{_input["
-              id "]}")["#{_input["
-              object_type_selected "]}"].values
-          }
-          end,
-  
-        output_fields: lambda do |object_definitions, _input, _output_schema |
-            object_definitions["workspaces"]
-          end,
-  
-      }
-    },
-  
-    triggers: {
-  
-    },
-  
-    pick_lists: {
-      ml_object_types: lambda do
-          [
-            # Display name, value["Project", "workspaces"],
-            ["Task", "stories"]
-  
-          ]
-        end
-  
-      # folder: lambda do |connection |
-          # get("https://www.wrike.com/api/v3/folders")["data"].
-        # map {
-          | folder | [folder["title"], folder["id"]]
+    stories: {
+      fields: lambda do |_connection, _config_fields|
+
+        
+[
+{
+
+  type: "array",
+  name: "stories",
+
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Title",
+          "type": "string",
+          "name": "title"
+        },
+        {
+          "control_type": "text",
+          "label": "Description",
+          "type": "string",
+          "name": "description"
+        },
+        {
+          "control_type": "text",
+          "label": "Updated at",
+          "render_input": "date_time_conversion",
+          "parse_output": "date_time_conversion",
+          "type": "date_time",
+          "name": "updated_at"
+        },
+        {
+          "control_type": "text",
+          "label": "Assignment timestamped at",
+          "render_input": "date_time_conversion",
+          "parse_output": "date_time_conversion",
+          "type": "date_time",
+          "name": "assignment_timestamped_at"
+        },
+        {
+          "control_type": "text",
+          "label": "Created at",
+          "render_input": "date_time_conversion",
+          "parse_output": "date_time_conversion",
+          "type": "date_time",
+          "name": "created_at"
+        },
+        {
+          "control_type": "text",
+          "label": "Due date",
+          "type": "string",
+          "name": "due_date"
+        },
+        {
+          "control_type": "text",
+          "label": "Start date",
+          "type": "string",
+          "name": "start_date"
+        },
+        {
+          "control_type": "text",
+          "label": "Story type",
+          "type": "string",
+          "name": "story_type"
+        },
+        {
+          "control_type": "text",
+          "label": "State",
+          "type": "string",
+          "name": "state"
+        },
+        {
+          "control_type": "number",
+          "label": "Position",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "position"
+        },
+        {
+          "control_type": "text",
+          "label": "Archived",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Archived",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "archived"
+          },
+          "type": "boolean",
+          "name": "archived"
+        },
+        {
+          "control_type": "text",
+          "label": "Deleted at",
+          "type": "string",
+          "name": "deleted_at"
+        },
+        {
+          "control_type": "number",
+          "label": "Sub story count",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "sub_story_count"
+        },
+        {
+          "control_type": "number",
+          "label": "Percentage complete",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "percentage_complete"
+        },
+        {
+          "control_type": "text",
+          "label": "Priority",
+          "type": "string",
+          "name": "priority"
+        },
+        {
+          "control_type": "text",
+          "label": "Has proofing access",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Has proofing access",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "has_proofing_access"
+          },
+          "type": "boolean",
+          "name": "has_proofing_access"
+        },
+        {
+          "control_type": "number",
+          "label": "Subtree depth",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "subtree_depth"
+        },
+        {
+          "control_type": "number",
+          "label": "Ancestry depth",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "ancestry_depth"
+        },
+        {
+          "control_type": "text",
+          "label": "Time trackable",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Time trackable",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "time_trackable"
+          },
+          "type": "boolean",
+          "name": "time_trackable"
+        },
+        {
+          "control_type": "number",
+          "label": "Time estimate in minutes",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "time_estimate_in_minutes"
+        },
+        {
+          "control_type": "number",
+          "label": "Logged billable time in minutes",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "logged_billable_time_in_minutes"
+        },
+        {
+          "control_type": "number",
+          "label": "Logged nonbillable time in minutes",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "logged_nonbillable_time_in_minutes"
+        },
+        {
+          "control_type": "number",
+          "label": "Sub stories time estimate in minutes",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "sub_stories_time_estimate_in_minutes"
+        },
+        {
+          "control_type": "text",
+          "label": "Sub stories billable time in minutes",
+          "type": "string",
+          "name": "sub_stories_billable_time_in_minutes"
+        },
+        {
+          "control_type": "number",
+          "label": "Weight",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "weight"
+        },
+        {
+          "control_type": "number",
+          "label": "Budget estimate in cents",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "budget_estimate_in_cents"
+        },
+        {
+          "control_type": "number",
+          "label": "Budget used in cents",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "budget_used_in_cents"
+        },
+        {
+          "control_type": "number",
+          "label": "Uninvoiced balance in cents",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "uninvoiced_balance_in_cents"
+        },
+        {
+          "control_type": "number",
+          "label": "Invoiced balance in cents",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "invoiced_balance_in_cents"
+        },
+        {
+          "control_type": "text",
+          "label": "Sub stories budget estimate in cents",
+          "type": "string",
+          "name": "sub_stories_budget_estimate_in_cents"
+        },
+        {
+          "control_type": "text",
+          "label": "Sub stories budget used in cents",
+          "type": "string",
+          "name": "sub_stories_budget_used_in_cents"
+        },
+        {
+          "control_type": "text",
+          "label": "Fixed fee",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Fixed fee",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "fixed_fee"
+          },
+          "type": "boolean",
+          "name": "fixed_fee"
+        },
+        {
+          "control_type": "text",
+          "label": "Billable",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Billable",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "billable"
+          },
+          "type": "boolean",
+          "name": "billable"
+        },
+        {
+          "control_type": "text",
+          "label": "Workspace ID",
+          "type": "string",
+          "name": "workspace_id"
+        },
+        {
+          "control_type": "text",
+          "label": "Creator ID",
+          "type": "string",
+          "name": "creator_id"
+        },
+        {
+          "control_type": "text",
+          "label": "Parent ID",
+          "type": "string",
+          "name": "parent_id"
+        },
+        {
+          "control_type": "text",
+          "label": "Root ID",
+          "type": "string",
+          "name": "root_id"
+        },
+        {
+          "control_type": "text",
+          "label": "ID",
+          "type": "string",
+          "name": "id"
         }
-      # end
+      ]
+}
+]
+        
+        
+        
+        
+        
+        
+        
+      end
+    },      
+    time_entries: {
+      fields: lambda do |_connection, _config_fields|
+     [
+          { 
+            name: "time_entries",
+            type: "array",
+            "properties": [
+        {
+          "control_type": "text",
+          "label": "Location",
+          "type": "string",
+          "name": "location"
+        },
+        {
+          "control_type": "text",
+          "label": "Created at",
+          "render_input": "date_time_conversion",
+          "parse_output": "date_time_conversion",
+          "type": "date_time",
+          "name": "created_at"
+        },
+        {
+          "control_type": "text",
+          "label": "Updated at",
+          "render_input": "date_time_conversion",
+          "parse_output": "date_time_conversion",
+          "type": "date_time",
+          "name": "updated_at"
+        },
+        {
+          "control_type": "text",
+          "label": "Date performed",
+          "type": "string",
+          "name": "date_performed"
+        },
+        {
+          "control_type": "number",
+          "label": "Time in minutes",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "time_in_minutes"
+        },
+        {
+          "control_type": "text",
+          "label": "Billable",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Billable",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "billable"
+          },
+          "type": "boolean",
+          "name": "billable"
+        },
+        {
+          "control_type": "text",
+          "label": "Notes",
+          "type": "string",
+          "name": "notes"
+        },
+        {
+          "control_type": "number",
+          "label": "Rate in cents",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "rate_in_cents"
+        },
+        {
+          "control_type": "number",
+          "label": "Cost rate in cents",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "cost_rate_in_cents"
+        },
+        {
+          "control_type": "text",
+          "label": "Currency",
+          "type": "string",
+          "name": "currency"
+        },
+        {
+          "control_type": "text",
+          "label": "Currency symbol",
+          "type": "string",
+          "name": "currency_symbol"
+        },
+        {
+          "control_type": "number",
+          "label": "Currency base unit",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "currency_base_unit"
+        },
+        {
+          "control_type": "text",
+          "label": "Approved",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Approved",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "approved"
+          },
+          "type": "boolean",
+          "name": "approved"
+        },
+        {
+          "control_type": "text",
+          "label": "Taxable",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Taxable",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "taxable"
+          },
+          "type": "boolean",
+          "name": "taxable"
+        },
+        {
+          "control_type": "text",
+          "label": "Is invoiced",
+          "render_input": {},
+          "parse_output": {},
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Is invoiced",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "is_invoiced"
+          },
+          "type": "boolean",
+          "name": "is_invoiced"
+        },
+        {
+          "control_type": "text",
+          "label": "Story ID",
+          "type": "string",
+          "name": "story_id"
+        },
+        {
+          "control_type": "text",
+          "label": "Workspace ID",
+          "type": "string",
+          "name": "workspace_id"
+        },
+        {
+          "control_type": "text",
+          "label": "User ID",
+          "type": "string",
+          "name": "user_id"
+        },
+        {
+          "control_type": "text",
+          "label": "Active submission ID",
+          "type": "string",
+          "name": "active_submission_id"
+        },
+        {
+          "control_type": "text",
+          "label": "Recent submission ID",
+          "type": "string",
+          "name": "recent_submission_id"
+        },
+        {
+          "control_type": "text",
+          "label": "ID",
+          "type": "string",
+          "name": "id"
+        }
+      ]
+          }
+     ]
+      end
+    }
+
+  },
+  actions: {
+    get_workspaces: {
+      # Define the way people search for your actions and how it looks like on the recipe level
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html
+      title: "Get first page of workspaces",
+      subtitle: "Get workspaces in Mavenlink",
+      description: "Get <span class='provider'>workspaces</span> " \
+        "in <span class='provider'>Mavenlink</span>",
+      help: "This action will retrieve all workspaces from Mavenlink. Use this action" \
+        " to get all your projects",
+
+      # The input fields shown for this action. Shows when a user is defining the action.
+      # Possible arguements in this specific order - object_definitions
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#input-fields
+      input_fields: lambda do |object_definitions|
+          [
+        {
+          name: 'params',
+          label: 'Filter Parameters',
+          type: 'string',
+          optional: true
+        }
+      ]
+      end,
+
+      # This code is run when a recipe uses this action.
+      # Possible arguements in this specific order - connection, input, input_schema, output_schema
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#execute
+      execute: lambda do |_connection, _input, _input_schema, _output_schema|
+        { workspaces: get("workspaces?#{_input["params"]}")["workspaces"].values }
+      end,
+
+      # The output values of the action. Shows in the output datatree of a recipe.
+      # Possible arguements in this specific order - object_definitions
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#output-fields
+      output_fields: lambda do |object_definitions|
+        object_definitions["workspaces"]
+      end,
+
+      # Provides you with a preview of possible output values in your datatree.
+      # Possible arguements in this specific order - connection, input
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#sample-output
+      sample_output: lambda do |_connection, _input|
+        get("workspaces")["workspaces"].values 
+      end
     },
-  
-    # Reusable methods can be called from object_definitions,
-    picklists or actions
-    # See more at https: //docs.workato.com/developing-connectors/sdk/sdk-reference/methods.html
-      methods: {}
+    
+    
+    get_stories: {
+
+      title: "Get first page of stories",
+      subtitle: "Get stories in Mavenlink",
+      description: "Get <span class='provider'>stories</span> " \
+        "in <span class='provider'>Mavenlink</span>",
+      help: "This action will retrieve all stories from Mavenlink. Use this action" \
+        " to get all your stories",
+
+      input_fields: lambda do |object_definitions|
+      end,
+
+      execute: lambda do |_connection, _input, _input_schema, _output_schema|
+        { stories: get("stories")["stories"].values }
+      end,
+
+      output_fields: lambda do |object_definitions|
+        object_definitions["stories"]
+      end,
+
+      sample_output: lambda do |_connection, _input|
+        get("stories")["stories"].values 
+      end
+    },
+    
+    get_time_entries: {
+
+      title: "Get first page of time entries",
+      subtitle: "Get time entries in Mavenlink",
+      description: "Get <span class='provider'>time entries</span> " \
+        "in <span class='provider'>Mavenlink</span>",
+      help: "This action will retrieve all time entries from Mavenlink. Use this action" \
+        " to get all your time entries",
+
+      input_fields: lambda do |object_definitions|
+      end,
+
+      execute: lambda do |_connection, _input, _input_schema, _output_schema|
+        { time_entries: get("time_entries")["time_entries"].values }
+      end,
+
+      output_fields: lambda do |object_definitions|
+        object_definitions["time_entries"]
+      end,
+
+      sample_output: lambda do |_connection, _input|
+        get("time_entries")["time_entries"].values 
+      end
+    },
+    
+    get_ml_object_by_id: {
+
+      title: "Get ML Object by Id",
+      subtitle: "Get object by Id in Mavenlink",
+      description: "Get object in Mavenlink by Id</span>",
+      help: "This will retrieve one object from Mavenlink. Use this action" \
+        " to get one project",
+
+      # The input fields shown for this action. Shows when a user is defining the action.
+      # Possible arguements in this specific order - object_definitions
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#input-fields
+      
+       config_fields: [
+    {
+      name: 'object_type_selected',
+      optional: false,
+      label: 'Object Type',
+      control_type: 'select',
+      pick_list: 'ml_object_types',
+      hint: 'Select the ML object type from picklist.'
+    }
+  ],
+      input_fields: lambda do 
+           [
+        {
+          name: 'id',
+          label: 'ID',
+          type: 'integer',
+          optional: false
+        }
+      ]
+      end,
+
+      # This code is run when a recipe uses this action.
+      # Possible arguements in this specific order - connection, input, input_schema, output_schema
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#execute
+      execute: lambda do |_connection, _input, _input_schema, _output_schema|
+        { "#{_input['object_type_selected']}"=> get("#{_input["object_type_selected"]}/#{_input["id"]}")["#{_input["object_type_selected"]}"].values }
+      end,
+
+      # The output values of the action. Shows in the output datatree of a recipe.
+      # Possible arguements in this specific order - object_definitions
+      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#output-fields
+      output_fields: lambda do |object_definitions, _input, _output_schema|
+        object_definitions["workspaces"]
+      end,
+
+
+    }
+  },
+
+  triggers: {
+    # Dynamic webhook example. Subscribes and unsubscribes webhooks programatically
+    # see more at https://docs.workato.com/developing-connectors/sdk/guides/building-triggers/dynamic-webhook.html
+  #   new_event: {
+  #     description: "New <span class='provider'>event</span> " \
+  #       "in <span class='provider'>Mavenlink</span>",
+  #     input_fields: lambda do |_object_definitions|
+  #       {
+  #         name: "object",
+  #         control_type: "select",
+  #         pick_list: "object_type",
+  #         optional: true
+  #       }
+  #     end,
+
+  #     webhook_subscribe: lambda do |webhook_url, _connection, input|
+  #       event_type = case input["event_type"]
+  #                    when "invitee.created"
+  #                      ["invitee.created"]
+  #                    when "invitee.canceled"
+  #                      ["invitee.canceled"]
+  #                    else
+  #                      ["invitee.created", "invitee.canceled"]
+  #                    end
+
+  #       post("/api/v1/hooks")
+  #         .payload(url: webhook_url, events: event_type)
+  #     end,
+
+  #     webhook_notification: lambda do |_input, payload|
+  #       payload
+  #     end,
+
+  #     webhook_unsubscribe: lambda do |webhook|
+  #       delete("/api/v1/hooks/#{webhook['id']}")
+  #     end,
+
+  #     dedup: lambda do |event|
+  #       event["event"] + "@" + event["payload"]["event"]["uuid"]
+  #     end,
+
+  #     output_fields: lambda do |object_definitions|
+  #       object_definitions["workspaces"]
+  #     end,
+
+    
+  #   }
+
+    #  Polling trigger example. Checks for new records every 5 minutes
+    #  see more at https://docs.workato.com/developing-connectors/sdk/guides/building-triggers/poll.html
+    #  updated_ticket: {
+    #    input_fields: lambda do
+    #      [
+    #        {
+    #          name: 'since',
+    #          type: :timestamp,
+    #          optional: false
+    #        }
+    #      ]
+    #    end,
+
+    #    poll: lambda do |connection, input, last_updated_since|
+    #      page_size = 100
+    #      updated_since = (last_updated_since || input['since']).to_time.utc.iso8601
+
+    #      tickets = get("https://#{connection['helpdesk']}.freshdesk.com/api/v2/tickets.json").
+    #                params(order_by: 'updated_at',
+    #                       order_type: 'asc',
+    #                       per_page: page_size,
+    #                       updated_since: updated_since)
+
+    #      next_updated_since = tickets.last['updated_at'] unless tickets.blank?
+
+    #      {
+    #        events: tickets,
+    #        next_poll: next_updated_since,
+    #        can_poll_more: tickets.length >= page_size
+    #      }
+    #    end,
+
+    #    dedup: lambda do |event|
+    #      event['id']
+    #    end,
+
+    #    output_fields: lambda do |object_definitions|
+    #      object_definitions['ticket']
+    #    end
+    #  },
+
+  },
+
+  pick_lists: {
+    # Picklists can be referenced by inputs fields or object_definitions
+    # possible arguements - connection
+    # see more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/picklists.html
+    ml_object_types: lambda do
+      [
+        # Display name, value
+        ["Project", "workspaces"],
+        ["Task", "stories"]
+      
+      ]
+    end
+
+    # folder: lambda do |connection|
+    #   get("https://www.wrike.com/api/v3/folders")["data"].
+    #     map { |folder| [folder["title"], folder["id"]] }
+    # end
+  },
+
+  # Reusable methods can be called from object_definitions, picklists or actions
+  # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/methods.html
+  methods: {
   }
+}
+
