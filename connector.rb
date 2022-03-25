@@ -32,8 +32,10 @@
 
 
   test: lambda do |_connection|
-    get("workspaces?per_page=1")
+    get("users/me")
   end,
+
+
 
   object_definitions: {
     #  Object definitions can be referenced by any input or output fields in actions/triggers.
@@ -828,314 +830,314 @@
       fields: lambda do |_connection, _config_fields|
 
         
-[
-{
+      [
+      {
 
-  type: "array",
-  name: "stories",
+        type: "array",
+        name: "stories",
 
-      "properties": [
-        {
-          "control_type": "text",
-          "label": "Title",
-          "type": "string",
-          "name": "title"
-        },
-        {
-          "control_type": "text",
-          "label": "Description",
-          "type": "string",
-          "name": "description"
-        },
-        {
-          "control_type": "text",
-          "label": "Updated at",
-          "render_input": "date_time_conversion",
-          "parse_output": "date_time_conversion",
-          "type": "date_time",
-          "name": "updated_at"
-        },
-        {
-          "control_type": "text",
-          "label": "Assignment timestamped at",
-          "render_input": "date_time_conversion",
-          "parse_output": "date_time_conversion",
-          "type": "date_time",
-          "name": "assignment_timestamped_at"
-        },
-        {
-          "control_type": "text",
-          "label": "Created at",
-          "render_input": "date_time_conversion",
-          "parse_output": "date_time_conversion",
-          "type": "date_time",
-          "name": "created_at"
-        },
-        {
-          "control_type": "text",
-          "label": "Due date",
-          "type": "string",
-          "name": "due_date"
-        },
-        {
-          "control_type": "text",
-          "label": "Start date",
-          "type": "string",
-          "name": "start_date"
-        },
-        {
-          "control_type": "text",
-          "label": "Story type",
-          "type": "string",
-          "name": "story_type"
-        },
-        {
-          "control_type": "text",
-          "label": "State",
-          "type": "string",
-          "name": "state"
-        },
-        {
-          "control_type": "number",
-          "label": "Position",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "position"
-        },
-        {
-          "control_type": "text",
-          "label": "Archived",
-          "render_input": {},
-          "parse_output": {},
-          "toggle_hint": "Select from option list",
-          "toggle_field": {
-            "label": "Archived",
-            "control_type": "text",
-            "toggle_hint": "Use custom value",
-            "type": "boolean",
-            "name": "archived"
-          },
-          "type": "boolean",
-          "name": "archived"
-        },
-        {
-          "control_type": "text",
-          "label": "Deleted at",
-          "type": "string",
-          "name": "deleted_at"
-        },
-        {
-          "control_type": "number",
-          "label": "Sub story count",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "sub_story_count"
-        },
-        {
-          "control_type": "number",
-          "label": "Percentage complete",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "percentage_complete"
-        },
-        {
-          "control_type": "text",
-          "label": "Priority",
-          "type": "string",
-          "name": "priority"
-        },
-        {
-          "control_type": "text",
-          "label": "Has proofing access",
-          "render_input": {},
-          "parse_output": {},
-          "toggle_hint": "Select from option list",
-          "toggle_field": {
-            "label": "Has proofing access",
-            "control_type": "text",
-            "toggle_hint": "Use custom value",
-            "type": "boolean",
-            "name": "has_proofing_access"
-          },
-          "type": "boolean",
-          "name": "has_proofing_access"
-        },
-        {
-          "control_type": "number",
-          "label": "Subtree depth",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "subtree_depth"
-        },
-        {
-          "control_type": "number",
-          "label": "Ancestry depth",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "ancestry_depth"
-        },
-        {
-          "control_type": "text",
-          "label": "Time trackable",
-          "render_input": {},
-          "parse_output": {},
-          "toggle_hint": "Select from option list",
-          "toggle_field": {
-            "label": "Time trackable",
-            "control_type": "text",
-            "toggle_hint": "Use custom value",
-            "type": "boolean",
-            "name": "time_trackable"
-          },
-          "type": "boolean",
-          "name": "time_trackable"
-        },
-        {
-          "control_type": "number",
-          "label": "Time estimate in minutes",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "time_estimate_in_minutes"
-        },
-        {
-          "control_type": "number",
-          "label": "Logged billable time in minutes",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "logged_billable_time_in_minutes"
-        },
-        {
-          "control_type": "number",
-          "label": "Logged nonbillable time in minutes",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "logged_nonbillable_time_in_minutes"
-        },
-        {
-          "control_type": "number",
-          "label": "Sub stories time estimate in minutes",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "sub_stories_time_estimate_in_minutes"
-        },
-        {
-          "control_type": "text",
-          "label": "Sub stories billable time in minutes",
-          "type": "string",
-          "name": "sub_stories_billable_time_in_minutes"
-        },
-        {
-          "control_type": "number",
-          "label": "Weight",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "weight"
-        },
-        {
-          "control_type": "number",
-          "label": "Budget estimate in cents",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "budget_estimate_in_cents"
-        },
-        {
-          "control_type": "number",
-          "label": "Budget used in cents",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "budget_used_in_cents"
-        },
-        {
-          "control_type": "number",
-          "label": "Uninvoiced balance in cents",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "uninvoiced_balance_in_cents"
-        },
-        {
-          "control_type": "number",
-          "label": "Invoiced balance in cents",
-          "parse_output": "float_conversion",
-          "type": "number",
-          "name": "invoiced_balance_in_cents"
-        },
-        {
-          "control_type": "text",
-          "label": "Sub stories budget estimate in cents",
-          "type": "string",
-          "name": "sub_stories_budget_estimate_in_cents"
-        },
-        {
-          "control_type": "text",
-          "label": "Sub stories budget used in cents",
-          "type": "string",
-          "name": "sub_stories_budget_used_in_cents"
-        },
-        {
-          "control_type": "text",
-          "label": "Fixed fee",
-          "render_input": {},
-          "parse_output": {},
-          "toggle_hint": "Select from option list",
-          "toggle_field": {
-            "label": "Fixed fee",
-            "control_type": "text",
-            "toggle_hint": "Use custom value",
-            "type": "boolean",
-            "name": "fixed_fee"
-          },
-          "type": "boolean",
-          "name": "fixed_fee"
-        },
-        {
-          "control_type": "text",
-          "label": "Billable",
-          "render_input": {},
-          "parse_output": {},
-          "toggle_hint": "Select from option list",
-          "toggle_field": {
-            "label": "Billable",
-            "control_type": "text",
-            "toggle_hint": "Use custom value",
-            "type": "boolean",
-            "name": "billable"
-          },
-          "type": "boolean",
-          "name": "billable"
-        },
-        {
-          "control_type": "text",
-          "label": "Workspace ID",
-          "type": "string",
-          "name": "workspace_id"
-        },
-        {
-          "control_type": "text",
-          "label": "Creator ID",
-          "type": "string",
-          "name": "creator_id"
-        },
-        {
-          "control_type": "text",
-          "label": "Parent ID",
-          "type": "string",
-          "name": "parent_id"
-        },
-        {
-          "control_type": "text",
-          "label": "Root ID",
-          "type": "string",
-          "name": "root_id"
-        },
-        {
-          "control_type": "text",
-          "label": "ID",
-          "type": "string",
-          "name": "id"
-        }
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Title",
+                "type": "string",
+                "name": "title"
+              },
+              {
+                "control_type": "text",
+                "label": "Description",
+                "type": "string",
+                "name": "description"
+              },
+              {
+                "control_type": "text",
+                "label": "Updated at",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "type": "date_time",
+                "name": "updated_at"
+              },
+              {
+                "control_type": "text",
+                "label": "Assignment timestamped at",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "type": "date_time",
+                "name": "assignment_timestamped_at"
+              },
+              {
+                "control_type": "text",
+                "label": "Created at",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "type": "date_time",
+                "name": "created_at"
+              },
+              {
+                "control_type": "text",
+                "label": "Due date",
+                "type": "string",
+                "name": "due_date"
+              },
+              {
+                "control_type": "text",
+                "label": "Start date",
+                "type": "string",
+                "name": "start_date"
+              },
+              {
+                "control_type": "text",
+                "label": "Story type",
+                "type": "string",
+                "name": "story_type"
+              },
+              {
+                "control_type": "text",
+                "label": "State",
+                "type": "string",
+                "name": "state"
+              },
+              {
+                "control_type": "number",
+                "label": "Position",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "position"
+              },
+              {
+                "control_type": "text",
+                "label": "Archived",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Archived",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "archived"
+                },
+                "type": "boolean",
+                "name": "archived"
+              },
+              {
+                "control_type": "text",
+                "label": "Deleted at",
+                "type": "string",
+                "name": "deleted_at"
+              },
+              {
+                "control_type": "number",
+                "label": "Sub story count",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "sub_story_count"
+              },
+              {
+                "control_type": "number",
+                "label": "Percentage complete",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "percentage_complete"
+              },
+              {
+                "control_type": "text",
+                "label": "Priority",
+                "type": "string",
+                "name": "priority"
+              },
+              {
+                "control_type": "text",
+                "label": "Has proofing access",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Has proofing access",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "has_proofing_access"
+                },
+                "type": "boolean",
+                "name": "has_proofing_access"
+              },
+              {
+                "control_type": "number",
+                "label": "Subtree depth",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "subtree_depth"
+              },
+              {
+                "control_type": "number",
+                "label": "Ancestry depth",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "ancestry_depth"
+              },
+              {
+                "control_type": "text",
+                "label": "Time trackable",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Time trackable",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "time_trackable"
+                },
+                "type": "boolean",
+                "name": "time_trackable"
+              },
+              {
+                "control_type": "number",
+                "label": "Time estimate in minutes",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "time_estimate_in_minutes"
+              },
+              {
+                "control_type": "number",
+                "label": "Logged billable time in minutes",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "logged_billable_time_in_minutes"
+              },
+              {
+                "control_type": "number",
+                "label": "Logged nonbillable time in minutes",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "logged_nonbillable_time_in_minutes"
+              },
+              {
+                "control_type": "number",
+                "label": "Sub stories time estimate in minutes",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "sub_stories_time_estimate_in_minutes"
+              },
+              {
+                "control_type": "text",
+                "label": "Sub stories billable time in minutes",
+                "type": "string",
+                "name": "sub_stories_billable_time_in_minutes"
+              },
+              {
+                "control_type": "number",
+                "label": "Weight",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "weight"
+              },
+              {
+                "control_type": "number",
+                "label": "Budget estimate in cents",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "budget_estimate_in_cents"
+              },
+              {
+                "control_type": "number",
+                "label": "Budget used in cents",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "budget_used_in_cents"
+              },
+              {
+                "control_type": "number",
+                "label": "Uninvoiced balance in cents",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "uninvoiced_balance_in_cents"
+              },
+              {
+                "control_type": "number",
+                "label": "Invoiced balance in cents",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "invoiced_balance_in_cents"
+              },
+              {
+                "control_type": "text",
+                "label": "Sub stories budget estimate in cents",
+                "type": "string",
+                "name": "sub_stories_budget_estimate_in_cents"
+              },
+              {
+                "control_type": "text",
+                "label": "Sub stories budget used in cents",
+                "type": "string",
+                "name": "sub_stories_budget_used_in_cents"
+              },
+              {
+                "control_type": "text",
+                "label": "Fixed fee",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Fixed fee",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "fixed_fee"
+                },
+                "type": "boolean",
+                "name": "fixed_fee"
+              },
+              {
+                "control_type": "text",
+                "label": "Billable",
+                "render_input": {},
+                "parse_output": {},
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Billable",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "billable"
+                },
+                "type": "boolean",
+                "name": "billable"
+              },
+              {
+                "control_type": "text",
+                "label": "Workspace ID",
+                "type": "string",
+                "name": "workspace_id"
+              },
+              {
+                "control_type": "text",
+                "label": "Creator ID",
+                "type": "string",
+                "name": "creator_id"
+              },
+              {
+                "control_type": "text",
+                "label": "Parent ID",
+                "type": "string",
+                "name": "parent_id"
+              },
+              {
+                "control_type": "text",
+                "label": "Root ID",
+                "type": "string",
+                "name": "root_id"
+              },
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "id"
+              }
+            ]
+      }
       ]
-}
-]
         
         
         
@@ -1333,263 +1335,111 @@
     }
 
   },
+
+
+
   actions: {
-    get_workspaces: {
-      # Define the way people search for your actions and how it looks like on the recipe level
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html
-      title: "Get first page of workspaces",
-      subtitle: "Get workspaces in Mavenlink",
-      description: "Get <span class='provider'>workspaces</span> " \
-        "in <span class='provider'>Mavenlink</span>",
-      help: "This action will retrieve all workspaces from Mavenlink. Use this action" \
-        " to get all your projects",
 
-      # The input fields shown for this action. Shows when a user is defining the action.
-      # Possible arguements in this specific order - object_definitions
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#input-fields
-      input_fields: lambda do |object_definitions|
-          [
-        {
-          name: 'params',
-          label: 'Filter Parameters',
-          type: 'string',
-          optional: true
-        }
-      ]
-      end,
-
-      # This code is run when a recipe uses this action.
-      # Possible arguements in this specific order - connection, input, input_schema, output_schema
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#execute
-      execute: lambda do |_connection, _input, _input_schema, _output_schema|
-        { workspaces: get("workspaces?#{_input["params"]}")["workspaces"].values }
-      end,
-
-      # The output values of the action. Shows in the output datatree of a recipe.
-      # Possible arguements in this specific order - object_definitions
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#output-fields
-      output_fields: lambda do |object_definitions|
-        object_definitions["workspaces"]
-      end,
-
-      # Provides you with a preview of possible output values in your datatree.
-      # Possible arguements in this specific order - connection, input
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#sample-output
-      sample_output: lambda do |_connection, _input|
-        get("workspaces")["workspaces"].values 
-      end
-    },
-    
-    
-    get_stories: {
-
-      title: "Get first page of stories",
-      subtitle: "Get stories in Mavenlink",
-      description: "Get <span class='provider'>stories</span> " \
-        "in <span class='provider'>Mavenlink</span>",
-      help: "This action will retrieve all stories from Mavenlink. Use this action" \
-        " to get all your stories",
-
-      input_fields: lambda do |object_definitions|
-      end,
-
-      execute: lambda do |_connection, _input, _input_schema, _output_schema|
-        { stories: get("stories")["stories"].values }
-      end,
-
-      output_fields: lambda do |object_definitions|
-        object_definitions["stories"]
-      end,
-
-      sample_output: lambda do |_connection, _input|
-        get("stories")["stories"].values 
-      end
-    },
-    
-    get_time_entries: {
-
-      title: "Get first page of time entries",
-      subtitle: "Get time entries in Mavenlink",
-      description: "Get <span class='provider'>time entries</span> " \
-        "in <span class='provider'>Mavenlink</span>",
-      help: "This action will retrieve all time entries from Mavenlink. Use this action" \
-        " to get all your time entries",
-
-      input_fields: lambda do |object_definitions|
-      end,
-
-      execute: lambda do |_connection, _input, _input_schema, _output_schema|
-        { time_entries: get("time_entries")["time_entries"].values }
-      end,
-
-      output_fields: lambda do |object_definitions|
-        object_definitions["time_entries"]
-      end,
-
-      sample_output: lambda do |_connection, _input|
-        get("time_entries")["time_entries"].values 
-      end
-    },
     
     get_ml_object_by_id: {
-
       title: "Get ML Object by Id",
       subtitle: "Get object by Id in Mavenlink",
       description: "Get object in Mavenlink by Id</span>",
-      help: "This will retrieve one object from Mavenlink. Use this action" \
-        " to get one project",
+      help: "This will retrieve one object from Mavenlink. Use this action to get one object",
 
-      # The input fields shown for this action. Shows when a user is defining the action.
-      # Possible arguements in this specific order - object_definitions
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#input-fields
-      
-       config_fields: [
-    {
-      name: 'object_type_selected',
-      optional: false,
-      label: 'Object Type',
-      control_type: 'select',
-      pick_list: 'ml_object_types',
-      hint: 'Select the ML object type from picklist.'
-    }
-  ],
+       config_fields: 
+        [
+          {
+            name: 'object_type_selected',
+            optional: false,
+            label: 'Object Type',
+            control_type: 'select',
+            pick_list: 'ml_object_types',
+            hint: 'Select the ML object type from picklist.'
+          }
+        ],
       input_fields: lambda do 
-           [
-        {
-          name: 'id',
-          label: 'ID',
-          type: 'integer',
-          optional: false
-        }
-      ]
+        [
+          {
+            name: 'id',
+            label: 'ID',
+            type: 'integer',
+            optional: false
+          }
+       ]
       end,
 
-      # This code is run when a recipe uses this action.
-      # Possible arguements in this specific order - connection, input, input_schema, output_schema
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#execute
       execute: lambda do |_connection, _input, _input_schema, _output_schema|
         { "#{_input['object_type_selected']}"=> get("#{_input["object_type_selected"]}/#{_input["id"]}")["#{_input["object_type_selected"]}"].values }
       end,
 
-      # The output values of the action. Shows in the output datatree of a recipe.
-      # Possible arguements in this specific order - object_definitions
-      # See more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/actions.html#output-fields
       output_fields: lambda do |object_definitions, _input, _output_schema|
         object_definitions["workspaces"]
       end,
+    },
 
+    get_ml_updated_objects: {
+      title: "Get updated Mavenlink Objects",
+      subtitle: "Get list Mavenlink objects Updated after a specific date/time",
+      description: "Mavenlink",
+      help: "Mavenlink",
 
+       config_fields: 
+        [
+          {
+            name: 'object_type_selected',
+            optional: false,
+            label: 'Mavenlink Object',
+            control_type: 'select',
+            pick_list: 'ml_object_types',
+            hint: 'Select the ML object type from picklist.'
+          }
+        ],
+      input_fields: lambda do 
+        [
+          {
+            name: 'updated_after',
+            label: 'Updated After',
+            type: 'date_time',
+            optional: false
+          },
+                    {
+            name: 'params',
+            label: 'Additional Params',
+            type: 'string',
+            optional: true
+          }
+       ]
+      end,
+
+      execute: lambda do |_connection, _input, _input_schema, _output_schema|
+        { "#{_input['object_type_selected']}"=> get("#{_input["object_type_selected"]}?updated_after=#{_input["updated_after"]}&per_page=200&#{_input["params"]}")["#{_input["object_type_selected"]}"].values }
+      end,
+
+      output_fields: lambda do |object_definitions, _input, _output_schema|
+        object_definitions["workspaces"]
+      end,
     }
+
+
   },
 
   triggers: {
-    # Dynamic webhook example. Subscribes and unsubscribes webhooks programatically
-    # see more at https://docs.workato.com/developing-connectors/sdk/guides/building-triggers/dynamic-webhook.html
-  #   new_event: {
-  #     description: "New <span class='provider'>event</span> " \
-  #       "in <span class='provider'>Mavenlink</span>",
-  #     input_fields: lambda do |_object_definitions|
-  #       {
-  #         name: "object",
-  #         control_type: "select",
-  #         pick_list: "object_type",
-  #         optional: true
-  #       }
-  #     end,
-
-  #     webhook_subscribe: lambda do |webhook_url, _connection, input|
-  #       event_type = case input["event_type"]
-  #                    when "invitee.created"
-  #                      ["invitee.created"]
-  #                    when "invitee.canceled"
-  #                      ["invitee.canceled"]
-  #                    else
-  #                      ["invitee.created", "invitee.canceled"]
-  #                    end
-
-  #       post("/api/v1/hooks")
-  #         .payload(url: webhook_url, events: event_type)
-  #     end,
-
-  #     webhook_notification: lambda do |_input, payload|
-  #       payload
-  #     end,
-
-  #     webhook_unsubscribe: lambda do |webhook|
-  #       delete("/api/v1/hooks/#{webhook['id']}")
-  #     end,
-
-  #     dedup: lambda do |event|
-  #       event["event"] + "@" + event["payload"]["event"]["uuid"]
-  #     end,
-
-  #     output_fields: lambda do |object_definitions|
-  #       object_definitions["workspaces"]
-  #     end,
-
-    
-  #   }
-
-    #  Polling trigger example. Checks for new records every 5 minutes
-    #  see more at https://docs.workato.com/developing-connectors/sdk/guides/building-triggers/poll.html
-    #  updated_ticket: {
-    #    input_fields: lambda do
-    #      [
-    #        {
-    #          name: 'since',
-    #          type: :timestamp,
-    #          optional: false
-    #        }
-    #      ]
-    #    end,
-
-    #    poll: lambda do |connection, input, last_updated_since|
-    #      page_size = 100
-    #      updated_since = (last_updated_since || input['since']).to_time.utc.iso8601
-
-    #      tickets = get("https://#{connection['helpdesk']}.freshdesk.com/api/v2/tickets.json").
-    #                params(order_by: 'updated_at',
-    #                       order_type: 'asc',
-    #                       per_page: page_size,
-    #                       updated_since: updated_since)
-
-    #      next_updated_since = tickets.last['updated_at'] unless tickets.blank?
-
-    #      {
-    #        events: tickets,
-    #        next_poll: next_updated_since,
-    #        can_poll_more: tickets.length >= page_size
-    #      }
-    #    end,
-
-    #    dedup: lambda do |event|
-    #      event['id']
-    #    end,
-
-    #    output_fields: lambda do |object_definitions|
-    #      object_definitions['ticket']
-    #    end
-    #  },
+  
 
   },
 
   pick_lists: {
-    # Picklists can be referenced by inputs fields or object_definitions
-    # possible arguements - connection
-    # see more at https://docs.workato.com/developing-connectors/sdk/sdk-reference/picklists.html
+
     ml_object_types: lambda do
       [
         # Display name, value
         ["Project", "workspaces"],
-        ["Task", "stories"]
-      
+        ["Stories", "stories"],
+        ["Time Entries", "time_entries"]
       ]
     end
 
-    # folder: lambda do |connection|
-    #   get("https://www.wrike.com/api/v3/folders")["data"].
-    #     map { |folder| [folder["title"], folder["id"]] }
-    # end
   },
 
   # Reusable methods can be called from object_definitions, picklists or actions
