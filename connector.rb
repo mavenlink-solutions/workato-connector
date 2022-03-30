@@ -1332,8 +1332,111 @@
           }
      ]
       end
+    },
+
+     subscribed_events: {
+      fields: lambda do |_connection, _config_fields|
+     [
+          { 
+            name: "subscribed_events",
+            type: "array",
+              "properties": [
+          {
+            "control_type": "text",
+            "label": "Event type",
+            "type": "string",
+            "name": "event_type"
+          },
+          {
+            "control_type": "number",
+            "label": "Account ID",
+            "parse_output": "float_conversion",
+            "type": "number",
+            "name": "account_id"
+          },
+          {
+            "control_type": "number",
+            "label": "User ID",
+            "parse_output": "float_conversion",
+            "type": "number",
+            "name": "user_id"
+          },
+          {
+            "control_type": "number",
+            "label": "Subject ID",
+            "parse_output": "float_conversion",
+            "type": "number",
+            "name": "subject_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Subject type",
+            "type": "string",
+            "name": "subject_type"
+          },
+                
+                
+                          {
+            "control_type": "text",
+            "label": "Change summary",
+            "type": "string",
+            "name": "change_summary"
+          },
+                          {
+            "control_type": "text",
+            "label": "Change Details",
+            "type": "string",
+            "name": "change_details"
+          },
+                
+                
+                
+                
+                
+          {
+            "control_type": "text",
+            "label": "Subject changed at",
+            "render_input": "date_time_conversion",
+            "parse_output": "date_time_conversion",
+            "type": "date_time",
+            "name": "subject_changed_at"
+          },
+
+          {
+            "control_type": "text",
+            "label": "Updated at",
+            "render_input": "date_time_conversion",
+            "parse_output": "date_time_conversion",
+            "type": "date_time",
+            "name": "updated_at"
+          },
+          {
+            "control_type": "text",
+            "label": "Created at",
+            "render_input": "date_time_conversion",
+            "parse_output": "date_time_conversion",
+            "type": "date_time",
+            "name": "created_at"
+          },
+          {
+            "control_type": "text",
+            "label": "ID",
+            "type": "string",
+            "name": "id"
+          }
+        ],
+            
+            
+            
+            
+          }
+     ]
+      end
     }
 
+    
+    
+    
   },
 
 
@@ -1419,8 +1522,51 @@
       output_fields: lambda do |object_definitions, _input, _output_schema|
         object_definitions["workspaces"]
       end,
-    }
+    },
 
+    get_ml_events: {
+      title: "Get Mavenlink Subscribed Events",
+      subtitle: "Get Mavenlink Subscribed Events",
+      description: "Get Mavenlink Subscribed Events",
+      help: "Get Mavenlink Subscribed Events",
+
+       config_fields: 
+        [
+          {
+            name: 'event_types_selected',
+            optional: false,
+            label: 'Mavenlink Event Types',
+            control_type: 'multiselect',
+            pick_list: 'ml_event_types',
+            hint: 'Select the ML event type from picklist.'
+          }
+        ],
+      input_fields: lambda do 
+        [
+                {
+            name: 'updated_after',
+            label: 'Updated After',
+            type: 'date_time',
+            optional: false
+          },
+                    {
+            name: 'params',
+            label: 'Additional Params',
+            type: 'string',
+            optional: true
+          }
+       ]
+      end,
+
+      execute: lambda do |_connection, _input, _input_schema, _output_schema|
+        event_list=  parse_json("#{_input["event_types_selected"]}").join(",")       
+        { "subscribed_events"=> get("subscribed_events?subject_changed_after=#{_input["updated_after"]}&per_page=200&optional_fields=payload_changes,change_summary,change_details&event_types=#{event_list}")["subscribed_events"].values }      
+      end,
+
+      output_fields: lambda do |object_definitions, _input, _output_schema|
+        object_definitions["subscribed_events"]
+      end,
+    }
 
   },
 
@@ -1438,8 +1584,19 @@
         ["Stories", "stories"],
         ["Time Entries", "time_entries"]
       ]
+    end,
+    ml_event_types: lambda do
+      [
+        # Display name, value   
+        ["Story Delete", "story:deleted"],
+        ["Story Update", "story:updated"],
+        ["Story Create", "story:created"],
+        
+        ["Time Delete", "time_entry:deleted"],
+        ["Time Update", "time_entry:updated"],
+        ["Time Create", "time_entry:created"]
+      ]
     end
-
   },
 
   # Reusable methods can be called from object_definitions, picklists or actions
